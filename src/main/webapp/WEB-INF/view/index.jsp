@@ -8,7 +8,7 @@
 <h2>Вход</h2>
 <form method="POST">
     <label>Логин</label>
-    <input type="text" name="login"required>
+    <input type="text" name="login" required>
 
     <label>Пароль</label>
     <input type="password" name="password" required>

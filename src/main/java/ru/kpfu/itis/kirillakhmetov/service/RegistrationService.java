@@ -6,7 +6,11 @@ import ru.kpfu.itis.kirillakhmetov.entity.User;
 import ru.kpfu.itis.kirillakhmetov.util.PasswordUtil;
 
 public class RegistrationService {
-    private final UserDao userDao = new UserDao();
+    private final UserDao userDao;
+
+    public RegistrationService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public void registerUser(UserRegistrationDto user) {
         userDao.add(new User(

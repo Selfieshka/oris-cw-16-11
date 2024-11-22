@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 
 public final class PasswordUtil {
 
-    public static String encrypt(String password){
+    public static String encrypt(String password) {
         MessageDigest md;
 
         try {

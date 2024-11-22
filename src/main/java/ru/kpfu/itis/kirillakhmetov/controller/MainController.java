@@ -3,7 +3,6 @@ package ru.kpfu.itis.kirillakhmetov.controller;
 import ru.kpfu.itis.kirillakhmetov.dto.UserAuthorizationDao;
 import ru.kpfu.itis.kirillakhmetov.service.AuthorizationService;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,10 +26,15 @@ public class MainController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        authorizationService.authorizeUser(new UserAuthorizationDao(
-                req.getParameter("login"),
-                req.getParameter("password")
-        ),
-                resp);
+        if (authorizationService.authorizeUser(new UserAuthorizationDao(
+                        req.getParameter("login"),
+                        req.getParameter("password")
+                ),
+                resp)) {
+            resp.sendRedirect(req.getContextPath() + "/user");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/index");
+        }
+        ;
     }
 }

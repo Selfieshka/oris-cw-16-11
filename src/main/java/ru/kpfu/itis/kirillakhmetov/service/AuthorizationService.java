@@ -7,15 +7,18 @@ import ru.kpfu.itis.kirillakhmetov.util.PasswordUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 
 public class AuthorizationService {
 
-    private final UserDao userDao = new UserDao();
+    private final UserDao userDao;
 
-    public void authorizeUser(UserAuthorizationDao user, HttpServletResponse resp) throws IOException {
+    public AuthorizationService(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public boolean authorizeUser(UserAuthorizationDao user, HttpServletResponse resp) throws IOException {
         User userFromDb = userDao.getByLogin(user.login());
         if (userFromDb != null) {
             if (user.login().equals(userFromDb.getLogin()) &&
@@ -26,9 +29,11 @@ public class AuthorizationService {
             } else {
                 resp.sendRedirect("/login");
             }
-            userDao.addAttemptUser(user.login(), LocalDate.now(), true);
+            userDao.saveAttempt(user.login(), LocalDate.now(), true);
+            return true;
         } else {
-            userDao.addAttemptUser(user.login(), LocalDate.now(), false);
+            userDao.saveAttempt(user.login(), LocalDate.now(), false);
+            return false;
         }
     }
 }

@@ -1,11 +1,8 @@
 package ru.kpfu.itis.kirillakhmetov.controller;
 
-import ru.kpfu.itis.kirillakhmetov.dao.UserDao;
 import ru.kpfu.itis.kirillakhmetov.dto.UserRegistrationDto;
 import ru.kpfu.itis.kirillakhmetov.service.RegistrationService;
-import ru.kpfu.itis.kirillakhmetov.util.DatabaseConnectionUtil;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
