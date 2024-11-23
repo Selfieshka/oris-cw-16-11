@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-@WebServlet("/user")
-public class UserController extends HttpServlet {
+@WebServlet("/ajax/weather")
+public class AjaxWeatherController extends HttpServlet {
     private WeatherService weatherService;
 
     @Override
@@ -22,11 +22,6 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/view/user.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String city = req.getParameter("city");
         Double temp = weatherService.checkWeather(city);
         getServletContext().setAttribute("temp", temp);
@@ -36,7 +31,8 @@ public class UserController extends HttpServlet {
                 loginUser,
                 city
         ));
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write("Температура: %s".formatted(temp));
-//        getServletContext().getRequestDispatcher("/WEB-INF/view/user.jsp").forward(req, resp);
     }
 }
